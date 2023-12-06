@@ -20,7 +20,7 @@ function years_from() {
 }
 
 declare -g self prog name
-self="$(realpath -e "${BASH_SOURCE[0]}")"
+self="$(realpath "${BASH_SOURCE[0]}")"
 prog="$(basename "$self")"
 name="${prog%.tmux}"
 
