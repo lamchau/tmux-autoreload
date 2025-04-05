@@ -5,6 +5,20 @@
 # Copyright 2021 Maddison Hellstrom <github.com/b0o>, MIT License.
 
 set -Eeuo pipefail
+if [ -z "${BASH_VERSINFO:-}" ] || [ "${BASH_VERSINFO[0]}" -lt 4 ] ||
+  { [ "${BASH_VERSINFO[0]}" -eq 4 ] && [ "${BASH_VERSINFO[1]}" -lt 4 ]; }; then
+  message=$(
+    cat <<EOF
+tmux autoload requires bash >= 4.4
+  bash version: ${BASH_VERSION:-unknown}
+        script: $0
+EOF
+  )
+  echo "$message" >&2
+  echo "$message" | mail -s "[error]: tmux autoreload bash version" "$(whoami)"
+  exit 1
+fi
+
 if [[ ${BASH_VERSINFO[0]} -ge 5 || (${BASH_VERSINFO[0]} -eq 4 && ${BASH_VERSINFO[1]} -ge 4) ]]; then
   shopt -s inherit_errexit
 fi
