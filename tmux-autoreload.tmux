@@ -263,8 +263,8 @@ function main() {
   tmux set-option -g "@$name-pid" $$
 
   # force cleanup
-  for KILLPID in `ps ax | grep "entr.*tmux-autoreload" | grep -iv "grep" | awk '{print $1;}'`; do
-    kill $KILLPID;
+  for KILLPID in $(ps ax | grep "entr.*tmux-autoreload" | grep -iv "grep" | awk '{print $1;}'); do
+    kill "$KILLPID"
   done
 
   # shellcheck disable=2016
